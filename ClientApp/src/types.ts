@@ -6,9 +6,17 @@ export interface weatherData {
     summary: string | null
 }
 
-export class BaseError extends Error {
-	constructor(error: unknown) {
-		super(error+'')
-	}
+export interface invoiceData {
+    Id: number
+    Date: Date
+    DueDate: Date
+    Sum: number
+    Customer: string
 }
-export class networkRequestError extends BaseError {}
+
+export class BaseError extends Error {
+    constructor(error: unknown) {
+        super(error + '')
+    }
+}
+export class networkRequestError extends BaseError { }

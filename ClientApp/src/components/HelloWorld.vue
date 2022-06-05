@@ -25,6 +25,7 @@ async function getForecast() {
       {{weather.temperatureC}}&deg;C {{weather.summary}}
     </div>
   </div>
+  <router-link to="/about">Invoices</router-link>
   
 </template>
 
