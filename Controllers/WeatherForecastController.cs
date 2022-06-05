@@ -26,12 +26,22 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public IEnumerable<WeatherForecastDto> Get()
     {
-        return _dataContext.Weather.Select(x => new WeatherForecastDto() {
+        return _dataContext.Weather.Select(x => new WeatherForecastDto()
+        {
             Date = x.Date,
             TemperatureC = x.TemperatureC,
             TemperatureF = x.TemperatureF,
             City = x.City,
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            Summary = Summaries[summaryIndex(x.TemperatureC)]
         });
+    }
+
+    private int summaryIndex(int temperatureC)
+    {
+        // to adjust negative values so that minimum value is always >=0
+        float adjustedTemperature = temperatureC + Math.Abs(_dataContext.temperatureMin);
+        float temperatureRange = Math.Abs(_dataContext.temperatureMin) + Math.Abs(_dataContext.temperatureMax);
+        float index = (float)Summaries.Length * (adjustedTemperature / temperatureRange);
+        return (int)Math.Floor(index);
     }
 }
